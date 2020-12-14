@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { BoxArrowLeft, Dot } from 'react-bootstrap-icons';
 
 import './ChatHeader.scss';
