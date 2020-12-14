@@ -26,7 +26,11 @@ const Chat = ({ location }) => {
     setName(name);
     setRoom(room);
 
-    socket.emit('join', { name, room }, () => {});
+    socket.emit('join', { name, room }, (error) => {
+      if(error) {
+        alert(error);
+      }
+    });
 
     return () => {
       socket.emit('disconnect');
@@ -59,7 +63,6 @@ const Chat = ({ location }) => {
           <input
             className="input"
             type="text"
-            placeholder="Enter room name"
             placeholder="Type a message..."
             value={currentMessage}
             onChange={(e) => setCurrentMessage(e.target.value)}
