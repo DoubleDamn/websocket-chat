@@ -2,9 +2,6 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BoxArrowLeft, Dot } from 'react-bootstrap-icons';
 
-// import onlineIcon from '../../icons/onlineIcon.png';
-// import closeIcon from '../../icons/closeIcon.png';
-
 import './ChatHeader.scss';
 export const ChatHeader = ({ room }) => (
   <Container fluid className="header-container">
