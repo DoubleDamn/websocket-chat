@@ -9,4 +9,6 @@ App deployed on https://stupefied-hugle-b30da3.netlify.app/
 server deploy
 heroku git:remote -a ann-react-websocket-chat
 git add commit
-git push heroku master
+git push heroku main
+
+use https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder to auto deloy from heroku
