@@ -1,4 +1,4 @@
-deployed on https://stupefied-hugle-b30da3.netlify.app/
+deployed on https://ann-chat.netlify.app
 
 build client
 netlify deploy
