@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Container, Button, Form } from 'react-bootstrap';
 
+import { ENDPOINT } from '../constants';
 import './JoinPage.scss';
 
 const JoinPage = () => {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+  const [error, setError] = useState(false);
+
+  const handleClick = useCallback(async () => {
+    let response = await fetch(`${ENDPOINT}/users/${room}/${name}`);
+    let err = await response.json();
+    setError(err);
+
+    !err && history.push(`/chat?name=${name}&room=${room}`);
+  }, [name, room, history]);
 
   return (
     <Container fluid className="join-container">
@@ -19,6 +30,11 @@ const JoinPage = () => {
             placeholder="Enter your name"
             onChange={(event) => setName(event.target.value)}
           />
+          {error && (
+            <Form.Text className="text-error">
+              Username is taken. Choose another one
+            </Form.Text>
+          )}
         </Form.Group>
         <Form.Group controlId="formGroupRoom">
           <Form.Label>Room</Form.Label>
@@ -29,11 +45,13 @@ const JoinPage = () => {
           />
         </Form.Group>
 
-        <Link to={`/chat?name=${name}&room=${room}`}>
-          <Button type="submit" variant="primary" disabled={!name || !room}>
-            Sign In
-          </Button>
-        </Link>
+        <Button
+          onClick={handleClick}
+          variant="primary"
+          disabled={!name || !room}
+        >
+          Sign In
+        </Button>
       </Form>
     </Container>
   );

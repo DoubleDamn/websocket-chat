@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
 import io from 'socket.io-client';
 import { Form } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 
 import { ChatHeader } from './chat-header/ChatHeader';
-
-import './Chat.scss';
 import { Messages } from './messages/Messages';
+import { ENDPOINT } from '../constants';
+import './Chat.scss';
 
 let socket;
-const ENDPOINT =
-  'https://ann-react-websocket-chat.herokuapp.com/' || 'localhost:5000';
 
 const Chat = ({ location }) => {
+  const history = useHistory();
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [currentMessage, setCurrentMessage] = useState('');
@@ -27,16 +27,16 @@ const Chat = ({ location }) => {
     setRoom(room);
 
     socket.emit('join', { name, room }, (error) => {
-      if(error) {
+      if (error) {
         alert(error);
+        history.replace(`/`);
       }
     });
 
     return () => {
-      socket.emit('disconnect');
       socket.off();
     };
-  }, [location.search]);
+  }, [history, location.search]);
 
   useEffect(() => {
     socket.on('message', (message) => {
